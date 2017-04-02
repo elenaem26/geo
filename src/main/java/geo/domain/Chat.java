@@ -41,7 +41,7 @@ public class Chat extends AbstractEntity{
 
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private Date creationDate ;
 
     @OneToMany(mappedBy = "id.chat")
     private Set<UserChat> chatUsers = new HashSet<UserChat>();
