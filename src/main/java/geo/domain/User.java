@@ -3,6 +3,7 @@ package geo.domain;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -65,11 +66,15 @@ public class User extends AbstractEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
     @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    private List<Role> roles = new ArrayList<>();
+    private List<UserRole> userRoles = new ArrayList<>();
+
+    @Column(name = "IS_ENABLED")
+    @Type(type = "yes_no")
+    private boolean enabled = true;
 
     @Builder
-    public User(Long id, String uid, String username, String password, String lastName,
-                String firstName, String middleName, String email,String phone, City city, List<Role> roles) {
+    public User(Long id, String uid, String username, String password, String lastName, String firstName,
+                String middleName, String email,String phone, City city, List<UserRole> userRoles,boolean enabled) {
         super(id);
         this.uid = uid;
         this.username = username;
@@ -80,6 +85,7 @@ public class User extends AbstractEntity {
         this.email = email;
         this.phone = phone;
         this.city = city;
-        this.roles = roles;
+        this.userRoles = userRoles;
+        this.enabled = enabled;
     }
 }

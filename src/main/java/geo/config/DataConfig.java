@@ -22,7 +22,6 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("geo")
-@PropertySource("classpath:app.properties")
 @EnableJpaRepositories("geo.repository")
 public class DataConfig {
 
