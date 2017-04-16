@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * Created by ehm on 25.03.2017.
  */
-@Service("userDetailsService")
+@Service
 public class GeoUserDetailsService implements UserDetailsService {
     //get user from the database, via Hibernate
     @Autowired

@@ -1,7 +1,7 @@
 package geo.config;
 
-import geo.service.JWTAuthenticationFilter;
-import geo.service.JWTLoginFilter;
+import geo.filter.JWTAuthenticationFilter;
+import geo.filter.JWTLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -10,15 +10,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
-import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by ehm on 25.03.2017.
@@ -28,7 +28,6 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    @Qualifier("userDetailsService")
     UserDetailsService userDetailsService;
 
     @Autowired
@@ -39,28 +38,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/greeting/**").hasRole("SERVICE")
                 .antMatchers("/**").permitAll()
-                .and().formLogin()
-                .loginPage("/sessionexpired")
-                .successHandler(new SimpleUrlAuthenticationSuccessHandler())
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                 .and().logout()
                 .logoutUrl("/logout")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .and() // We filter the api/login requests
+                .and()
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
-                // And filter other requests to check the presence of JWT in header
                 .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);;
+                        UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint());;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
+    }
+
+    @Bean
+    public AuthenticationEntryPoint unauthorizedEntryPoint() {
+        return (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
     @Override

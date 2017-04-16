@@ -44,6 +44,7 @@ public class UserController {
                 .uid("new User" + new Date().toString())
                 .username("nick")
                 .password("heeey")
+                .enabled(true)
                 .email("elenaem26@gmail.com")
                 .build();
         userRepository.save(user);

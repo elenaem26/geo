@@ -1,6 +1,7 @@
-package geo.service;
+package geo.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import geo.filter.TokenAuthenticationService;
 import geo.xdto.AccountCredentials;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -47,6 +49,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletResponse res, FilterChain chain,
             Authentication auth) throws IOException, ServletException {
         TokenAuthenticationService
-                .addAuthentication(res, auth.getName());
+                .addAuthentication(res, auth.getName(), new ArrayList(auth.getAuthorities()));
     }
 }
