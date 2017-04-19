@@ -53,10 +53,10 @@ public class User extends AbstractEntity {
     @Column(name = "PHONE", length = 100)
     private String phone;
 
-    @OneToMany(mappedBy = "id.user")
+    @OneToMany(mappedBy = "id.user", orphanRemoval = true)
     private Set<UserChat> userChats = new HashSet<UserChat>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Message> messages;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -27,8 +27,4 @@ public class UserChat implements Serializable {
     @EmbeddedId
     private UserChatPK id;
 
-    @Column(name = "ROLE")
-    @Enumerated(EnumType.STRING)
-    private UserChatRole role;
-
 }

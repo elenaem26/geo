@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping type="one-way">
+        <class-a>geo.domain.Chat</class-a>
+        <class-b>geo.xdto.XChat</class-b>
+        <field>
+            <a>location.latitude</a>
+            <b>latitude</b>
+        </field>
+        <field>
+            <a>location.longitude</a>
+            <b>longitude</b>
+        </field>
+        <field>
+            <a>chatGroup.id</a>
+            <b>chatGroupId</b>
+        </field>
+    </mapping>
+
+</mappings>

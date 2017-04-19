@@ -22,7 +22,8 @@ public class Chat extends AbstractEntity{
 
     private static final long serialVersionUID = -7128821085658197780L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //TODO set nullable
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "LOCATION_ID", foreignKey = @ForeignKey(name = "FK_CHAT_LOCATION"))
     private Location location;
 
@@ -43,10 +44,10 @@ public class Chat extends AbstractEntity{
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate ;
 
-    @OneToMany(mappedBy = "id.chat")
+    @OneToMany(mappedBy = "id.chat", orphanRemoval = true)
     private Set<UserChat> chatUsers = new HashSet<UserChat>();
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", orphanRemoval = true)
     private List<Message> messages;
 
     @ManyToOne(fetch = FetchType.LAZY)
