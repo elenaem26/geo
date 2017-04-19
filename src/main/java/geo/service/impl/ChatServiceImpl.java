@@ -58,7 +58,7 @@ public class ChatServiceImpl implements ChatService {
             disposeDate = c.getTime();
             chat.setDisposeDate(disposeDate);
         }
-        if (xchat.getChatGroupId() != null) {
+        if ( xchat.getChatGroupId() != null) {
             //TODO checkUsers and their roles to create chat in this chatgroup
             ChatGroup chatGroup = chatGroupRepository.findOne(xchat.getChatGroupId());
             if (chatGroup == null) {
