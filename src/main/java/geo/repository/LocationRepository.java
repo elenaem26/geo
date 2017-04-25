@@ -12,5 +12,5 @@ import java.math.BigDecimal;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-    Location findByLatitudeAndLongitude(BigDecimal latitude, BigDecimal longitude);
+    Location findByLatitudeAndLongitude(Double latitude, Double longitude);
 }

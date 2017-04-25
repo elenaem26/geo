@@ -3,6 +3,8 @@ package geo.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,11 +22,11 @@ public class Location extends AbstractEntity {
 
     private static final long serialVersionUID = 5222872291632508240L;
 
-    @Column(precision = 10, scale = 8)
-    private BigDecimal latitude;
+    @Column(columnDefinition="Decimal(10,8)")
+    private Double latitude;
 
-    @Column(precision = 10, scale = 8)
-    private BigDecimal longitude;
+    @Column(columnDefinition="Decimal(10,8)")
+    private Double longitude;
 
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
     private List<City> cities;

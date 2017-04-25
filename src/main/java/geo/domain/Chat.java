@@ -3,6 +3,7 @@ package geo.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -53,4 +54,7 @@ public class Chat extends AbstractEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHATGROUP_ID", foreignKey = @ForeignKey(name = "FK_CHAT_CHATGROUP"))
     private ChatGroup chatGroup;
+
+    @Transient
+    Double distance;
 }

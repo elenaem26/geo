@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -58,7 +60,7 @@ public class ChatServiceImpl implements ChatService {
             disposeDate = c.getTime();
             chat.setDisposeDate(disposeDate);
         }
-        if ( xchat.getChatGroupId() != null) {
+        if (xchat.getChatGroupId() != null) {
             //TODO checkUsers and their roles to create chat in this chatgroup
             ChatGroup chatGroup = chatGroupRepository.findOne(xchat.getChatGroupId());
             if (chatGroup == null) {
@@ -161,4 +163,46 @@ public class ChatServiceImpl implements ChatService {
             throw new IllegalArgumentException("User with id = " + currentUser.getId() + " already left chat with id = " + chat.getId());
         }
     }
+
+    @Override
+    public List<XChat> getChats(Double latitude, Double longitude) {
+        Double latitude1 = BigDecimal.valueOf(latitude).setScale(2, RoundingMode.DOWN).doubleValue() - 0.01;
+        Double latitude2 = BigDecimal.valueOf(latitude).setScale(2, RoundingMode.DOWN).doubleValue() + 0.02;
+        Double longitude1 = BigDecimal.valueOf(longitude).setScale(2, RoundingMode.DOWN).doubleValue() - 0.01;
+        Double longitude2 = BigDecimal.valueOf(longitude).setScale(2, RoundingMode.DOWN).doubleValue() + 0.02;
+        List<Chat> chats = chatRepository.findByLocation_LatitudeBetweenAndLocation_LongitudeBetween(latitude1, latitude2, longitude1, longitude2);
+        TreeSet<Chat> sortedSet = new TreeSet<>(
+                (c1, c2) -> (c1.getDistance() == null || c2.getDistance() == null)
+                ? -1
+                : c1.getDistance().compareTo(c2.getDistance()));
+        chats.forEach(
+                chat -> {
+                    if (chat.getLocation() != null && chat.getLocation().getLatitude() != null && chat.getLocation().getLongitude() != null) {
+                        chat.setDistance(calculateDistance(latitude, longitude, chat.getLocation().getLatitude(), chat.getLocation().getLongitude()));
+                        if (chat.getDistance() <= chat.getRadius()) {
+                            sortedSet.add(chat);
+                        }
+                    }
+                }
+        );
+        List<XChat> xchats = new ArrayList<>();
+        for (Chat chat : sortedSet) {
+            xchats.add(mapper.map(chat, XChat.class));
+        }
+        return xchats;
+    }
+
+    public static double calculateDistance(Double lat1, Double lng1, Double lat2, Double lng2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        float dist = (float) (earthRadius * c);
+
+        return dist;
+    }
+
 }

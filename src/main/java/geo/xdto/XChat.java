@@ -19,9 +19,9 @@ public class XChat implements Serializable{
     private static final long serialVersionUID = 4955639919122311820L;
 
     @NotNull
-    private BigDecimal latitude;
+    private Double latitude;
     @NotNull
-    private BigDecimal longitude;
+    private Double longitude;
     @NotNull
     @Size(min = 1, max = 100)
     private String name;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -64,5 +65,12 @@ public class ChatController {
     public List<XChat> getUserChatsAdmin() {
         log.debug("getUserChatsAdmin request received");
         return chatService.getChatsByUser(userService.getCurrentUsername(), UserChatRole.ADMIN);
+    }
+
+    @RequestMapping(produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public List<XChat> getUserChats(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
+        log.debug("getUserChats request received");
+        return chatService.getChats(latitude, longitude);
     }
 }

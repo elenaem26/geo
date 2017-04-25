@@ -3,6 +3,7 @@ package geo.service;
 import geo.domain.UserChatRole;
 import geo.xdto.XChat;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -19,4 +20,6 @@ public interface ChatService {
     void joinChat(String userName, Long chatId);
 
     void leaveChat(String userName, Long chatId);
+
+    List<XChat> getChats(Double latitude, Double longitude);
 }

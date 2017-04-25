@@ -2,6 +2,7 @@ package geo.service;
 
 import geo.domain.UserRole;
 import geo.repository.UserRepository;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +33,9 @@ public class GeoUserDetailsService implements UserDetailsService {
             throws UsernameNotFoundException {
 
         geo.domain.User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
         List<GrantedAuthority> authorities =
                 buildUserAuthority(user.getUserRoles());
 
@@ -49,6 +53,9 @@ public class GeoUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> buildUserAuthority(List<UserRole> userRoles) {
 
+        if (Collections.isEmpty(userRoles)) {
+            return new ArrayList<>();
+        }
         Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
 
         // Build user's authorities
