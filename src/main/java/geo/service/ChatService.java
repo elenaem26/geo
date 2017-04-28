@@ -4,7 +4,6 @@ import geo.domain.UserChatRole;
 import geo.xdto.XChat;
 import geo.xdto.XMessage;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**

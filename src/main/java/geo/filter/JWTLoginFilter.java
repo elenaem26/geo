@@ -1,7 +1,6 @@
 package geo.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import geo.filter.TokenAuthenticationService;
 import geo.xdto.AccountCredentials;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
