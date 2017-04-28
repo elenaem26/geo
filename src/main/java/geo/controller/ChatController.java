@@ -4,6 +4,7 @@ import geo.domain.UserChatRole;
 import geo.service.ChatService;
 import geo.service.UserService;
 import geo.xdto.XChat;
+import geo.xdto.XMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -72,5 +72,12 @@ public class ChatController {
     public List<XChat> getUserChats(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
         log.debug("getUserChats request received");
         return chatService.getChats(latitude, longitude);
+    }
+
+    @RequestMapping(value = "/{chatId}/messages", produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public List<XMessage> getMessages(@PathVariable("chatId") Long chatId) {
+        log.debug("getMessages request received");
+        return chatService.getMessages(chatId);
     }
 }

@@ -21,4 +21,13 @@
         </field>
     </mapping>
 
+    <mapping type="one-way">
+        <class-a>geo.domain.Message</class-a>
+        <class-b>geo.xdto.XMessage</class-b>
+        <field>
+            <a>user.id</a>
+            <b>userId</b>
+        </field>
+    </mapping>
+
 </mappings>

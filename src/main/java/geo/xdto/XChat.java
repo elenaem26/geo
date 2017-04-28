@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor
-public class XChat implements Serializable{
+public class XChat implements Serializable {
     private static final long serialVersionUID = 4955639919122311820L;
 
     @NotNull

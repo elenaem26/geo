@@ -4,6 +4,7 @@ import geo.domain.*;
 import geo.repository.*;
 import geo.service.ChatService;
 import geo.xdto.XChat;
+import geo.xdto.XMessage;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -190,6 +191,19 @@ public class ChatServiceImpl implements ChatService {
             xchats.add(mapper.map(chat, XChat.class));
         }
         return xchats;
+    }
+
+    @Override
+    public List<XMessage> getMessages(Long chatId) {
+        Chat chat = chatRepository.findOne(chatId);
+        if (chat == null) {
+            throw new IllegalArgumentException("Chat with id = " + chatId + " not found");
+        }
+        List<XMessage> messages = new ArrayList<>();
+        for (Message message : chat.getMessages()) {
+            messages.add(mapper.map(message, XMessage.class));
+        }
+        return messages;
     }
 
     public static double calculateDistance(Double lat1, Double lng1, Double lat2, Double lng2) {
