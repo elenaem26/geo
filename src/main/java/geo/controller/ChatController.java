@@ -22,7 +22,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
  * Created by ehm on 18.04.2017.
  */
 @Controller
-@RequestMapping("/chat")
+@RequestMapping("/api/chat")
 public class ChatController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());

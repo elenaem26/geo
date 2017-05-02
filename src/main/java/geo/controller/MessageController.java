@@ -21,7 +21,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
  * Created by ehm on 28.04.2017.
  */
 @Controller
-@RequestMapping("/message")
+@RequestMapping("/api/message")
 public class MessageController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
