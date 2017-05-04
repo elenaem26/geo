@@ -118,20 +118,23 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void joinChat(String userName, Long chatId) {
+    public void joinChat(String userName, Long chatId, Double latitude, Double longitude) {
         Chat chat = chatRepository.findOne(chatId);
         if (chat == null) {
             throw new IllegalArgumentException("Chat with id = " + chatId + " not found");
+        }
+        if (calculateDistance(latitude, longitude, chat.getLocation().getLatitude(), chat.getLocation().getLongitude()) > chat.getRadius()) {
+            throw new AccessDeniedException("You are not in the chat area");
         }
         User currentUser = userRepository.findByUsername(userName);
         if (currentUser == null) {
             throw new AccessDeniedException("Access denied for current user");
         }
-        if (currentUser.getUserChats() == null
-                || currentUser.getUserChats().stream()
-                    .anyMatch(c -> c.getId().getRole().equals(UserChatRole.VISITOR) && c.getId().getChat().getId().equals(chatId))) {
-            throw new IllegalArgumentException("User with id = " + currentUser.getId() + " already joined chat with id = " + chat.getId());
-        } else {
+//        if (currentUser.getUserChats() == null
+//                || currentUser.getUserChats().stream()
+//                    .anyMatch(c -> c.getId().getRole().equals(UserChatRole.VISITOR) && c.getId().getChat().getId().equals(chatId))) {
+//            throw new IllegalArgumentException("User with id = " + currentUser.getId() + " already joined chat with id = " + chat.getId());
+//        } else {
             UserChat userChat = UserChat.builder()
                     .id(UserChatPK.builder()
                             .user(currentUser)
@@ -140,7 +143,7 @@ public class ChatServiceImpl implements ChatService {
                             .build())
                     .build();
             userChat = userChatRepository.save(userChat);
-        }
+        //}
     }
 
     @Override
@@ -194,16 +197,12 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<XMessage> getMessages(Long chatId) {
+    public XChat getChat(Long chatId) {
         Chat chat = chatRepository.findOne(chatId);
         if (chat == null) {
             throw new IllegalArgumentException("Chat with id = " + chatId + " not found");
         }
-        List<XMessage> messages = new ArrayList<>();
-        for (Message message : chat.getMessages()) {
-            messages.add(mapper.map(message, XMessage.class));
-        }
-        return messages;
+        return mapper.map(chat, XChat.class);
     }
 
     public static double calculateDistance(Double lat1, Double lng1, Double lat2, Double lng2) {

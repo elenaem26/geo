@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ['ui.router', 'darthwade.loading']);
+var app = angular.module("myApp", ['ui.router', 'darthwade.loading', 'ngMap', 'config']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $provide, $httpProvider) {
@@ -17,7 +17,18 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
             views: {
                 'content@': {
                     templateUrl: 'partial/chats/chats.html',
-                    controller: 'myCtrl'
+                    controller: 'chatsCtrl'
+                }
+            }
+        }).state('chat', {
+            url: '/chat/:id',
+            data: {
+                pageTitle: 'Chat'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'partial/chats/chat.html',
+                    controller: 'chatCtrl'
                 }
             }
         }).state('login', {
@@ -43,11 +54,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
                             config.headers['Authorization'] = 'Bearer ' + currentUser.token;
                         }
                     }
-                    config.headers['Accept'] = 'application/json';
                     return config;
                 }
             };
         });
 
         $httpProvider.interceptors.push('httpRequestGeneralInterceptor');
+    }]);
+
+app.run(['CONFIG', '$http', 'stompHelper',
+    function (CONFIG, $http, stompHelper) {
+
+        initSocket();
+
+        function initSocket() {
+            var url = CONFIG.apiUrl + "ws";
+            return stompHelper.connect(url, "guest", "guest");
+        }
     }]);

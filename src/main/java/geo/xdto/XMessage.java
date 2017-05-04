@@ -23,7 +23,7 @@ public class XMessage implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long chatId;
 
-    private Long userId;
+    private String username;
 
     @Size(min = 1, max = 140)
     @NotNull

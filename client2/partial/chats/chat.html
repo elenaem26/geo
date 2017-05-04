@@ -1,0 +1,16 @@
+<div style="height: 500px;">
+    <div style="font-weight: bold; color: maroon">{{chat.name}}</div>
+    <div style="font-weight: bold">{{chat.description}}</div>
+    <div ng-repeat="message in messages">
+        {{message.username}} -> {{message.content}}
+    </div>
+
+    <form name="newMessageForm" class="form-horizontal editable-form" novalidate>
+        <input type="text" rows="10" name="message" id="messageField" ng-model="message.content" class="form-control">
+                        </input>
+        <div class="text-center">
+            <input type="submit" ng-click="sendMessage()" class="large-btn green" value="Отправить" />
+        </div>
+    </form>
+    <button ng-click="leaveChat()">Покинуть чат</button>
+</div>

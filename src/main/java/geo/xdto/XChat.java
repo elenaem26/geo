@@ -18,6 +18,7 @@ import java.util.Date;
 public class XChat implements Serializable {
     private static final long serialVersionUID = 4955639919122311820L;
 
+    private Long id;
     @NotNull
     private Double latitude;
     @NotNull

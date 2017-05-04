@@ -17,11 +17,11 @@ public interface ChatService {
 
     void removeUserChat(String userName, Long chatId);
 
-    void joinChat(String userName, Long chatId);
+    void joinChat(String userName, Long chatId, Double latitude, Double longitude);
 
     void leaveChat(String userName, Long chatId);
 
     List<XChat> getChats(Double latitude, Double longitude);
 
-    List<XMessage> getMessages(Long chatId);
+    XChat getChat(Long chatId);
 }

@@ -25,8 +25,8 @@
         <class-a>geo.domain.Message</class-a>
         <class-b>geo.xdto.XMessage</class-b>
         <field>
-            <a>user.id</a>
-            <b>userId</b>
+            <a>user.username</a>
+            <b>username</b>
         </field>
     </mapping>
 

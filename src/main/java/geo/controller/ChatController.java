@@ -46,14 +46,14 @@ public class ChatController {
         chatService.removeUserChat(userService.getCurrentUsername(), chatId);
     }
 
-    @RequestMapping(value = "/join/{chatId}", consumes = APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    @RequestMapping(value = "/{chatId}/join", consumes = APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void joinChat(@PathVariable("chatId") Long chatId) {
+    public void joinChat(@PathVariable("chatId") Long chatId, @RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
         log.debug("joinChat request received");
-        chatService.joinChat(userService.getCurrentUsername(), chatId);
+        chatService.joinChat(userService.getCurrentUsername(), chatId, latitude, longitude);
     }
 
-    @RequestMapping(value = "/leave/{chatId}", consumes = APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    @RequestMapping(value = "/{chatId}/leave", consumes = APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void leaveChat(@PathVariable("chatId") Long chatId) {
         log.debug("leaveChat userService received");
@@ -74,10 +74,10 @@ public class ChatController {
         return chatService.getChats(latitude, longitude);
     }
 
-    @RequestMapping(value = "/{chatId}/messages", produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/{chatId}", produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public List<XMessage> getMessages(@PathVariable("chatId") Long chatId) {
-        log.debug("getMessages request received");
-        return chatService.getMessages(chatId);
+    public XChat getChat(@PathVariable("chatId") Long chatId) {
+        log.debug("getChat request received");
+        return chatService.getChat(chatId);
     }
 }

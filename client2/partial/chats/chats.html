@@ -1,3 +1,5 @@
-{{ firstName + " " + lastName }}
-heyy
-{{chats}}
+<div ng-repeat="chat in chats">
+    <a  ui-sref="chat({id: chat.id})">{{chat.name}}</a>
+</div>
+<ng-map zoom="11" center="[{{latitude}}, {{longitude}}]">
+</ng-map>

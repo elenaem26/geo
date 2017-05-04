@@ -8,12 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -36,5 +35,12 @@ public class MessageController {
     public void saveMessage(@Valid @RequestBody XMessage message) {
         log.debug("createMessage request received");
         messageService.saveMessage(userService.getCurrentUsername(), message);
+    }
+
+    @RequestMapping(value = "/{chatId}/messages", produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public List<XMessage> getMessages(@PathVariable("chatId") Long chatId) {
+        log.debug("getMessages request received");
+        return messageService.getMessages(chatId);
     }
 }
