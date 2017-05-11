@@ -6,6 +6,8 @@ angular.module('myApp')
         $scope.messages = null;
         $scope.error = null;
         $scope.message = {};
+        var isDataLoaded = false;
+        var timer;
 
         angular.element(document).ready(function () {
                 joinChat().then(function () {
@@ -16,6 +18,7 @@ angular.module('myApp')
                     });
                     getMessages().then(function (response) {
                         $scope.messages = response.data;
+                        isDataLoaded = true;
                     }, function () {
                         $scope.error = "Не удалось загрузить сообщения";
                     });
@@ -24,6 +27,9 @@ angular.module('myApp')
                 });
                 connectToSocket("/topic/" + id);
             });
+        timer = setTimeout(function () {
+            timerScroll();
+        }, 300);
 
         $scope.sendMessage = function() {
             $scope.message.chatId = id;
@@ -60,8 +66,27 @@ angular.module('myApp')
                 if (frame.body != null) {
                     $scope.messages.push(JSON.parse(frame.body));
                     $scope.$apply();
+                    scrollDown();
                 }
             }
             stompHelper.subscribe(endpoint, addMessage);
+        }
+
+        //TODO better way
+        function timerScroll() {
+            if (!isDataLoaded) {
+                timer = setTimeout(function () {
+                    timerScroll();
+                }, 300);
+            } else {
+                timer = setTimeout(function () {
+                    scrollDown();
+                }, 300);
+            }
+        }
+
+        function scrollDown() {
+            var elem = document.getElementById('chatArea');
+            elem.scrollTop = elem.scrollHeight;
         }
     }]);

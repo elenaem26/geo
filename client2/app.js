@@ -3,8 +3,25 @@ var app = angular.module("myApp", ['ui.router', 'darthwade.loading', 'ngMap', 'c
 app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $provide, $httpProvider) {
         $urlRouterProvider.when('', '/');
-        $stateProvider.state('home', {
+        $stateProvider.state('root', {
+            url: '',
+            'abstract': true,
+            views: {
+                'menu': {
+                    templateUrl: 'partial/menu/menu.html',
+                    controller: 'MenuCtrl'
+                }/*,
+                'footer': {
+                    templateUrl: 'partial/footer/footer.html',
+                    controller: 'FooterCtrl'
+                }*/
+            }
+        }).state('home', {
             url: '/',
+            parent: 'root',
+            data: {
+                pageTitle: 'Чаты поблизости'
+            },
             /*data: {
              pageTitle: 'CURRENT_SITUATION'
              },
@@ -22,8 +39,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
             }
         }).state('chat', {
             url: '/chat/:id',
+            parent: 'root',
             data: {
-                pageTitle: 'Chat'
+                pageTitle: 'Чат'
             },
             views: {
                 'content@': {
@@ -33,8 +51,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
             }
         }).state('login', {
             url: '/login',
+            parent: 'root',
             data: {
-                pageTitle: 'LOG_IN_SYSTEM'
+                pageTitle: 'Войти'
             },
             views: {
                 'content@': {
@@ -62,8 +81,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
         $httpProvider.interceptors.push('httpRequestGeneralInterceptor');
     }]);
 
-app.run(['CONFIG', '$http', 'stompHelper',
-    function (CONFIG, $http, stompHelper) {
+app.run(['CONFIG', '$http', 'stompHelper', '$rootScope', '$state',
+    function (CONFIG, $http, stompHelper, $rootScope, $state) {
 
         initSocket();
 
@@ -71,4 +90,8 @@ app.run(['CONFIG', '$http', 'stompHelper',
             var url = CONFIG.apiUrl + "ws";
             return stompHelper.connect(url, "guest", "guest");
         }
+
+        $rootScope.$on('$stateChangeSuccess', function () {
+            document.title = $state.current.data.pageTitle;
+        });
     }]);

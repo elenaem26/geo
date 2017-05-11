@@ -1,0 +1,48 @@
+<nav class="navbar navbar-inverse main-head">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" ng-src="https://avatanplus.com/files/resources/mid/58b69533d0b0715a8936d28f.png" style="width: 31px;">
+            </a>
+            <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <p class="navbar-text hidden-xs hidden-sm">ГеоЧат</p>
+        <div class="navbar-collapse" ng-class="{'collapse' : navCollapsed}" ng-click="navCollapsed = !navCollapsed">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a ui-sref="home"
+                       ui-sref-active="nav-item-active">
+                        Чаты поблизости
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       ng-class="isPersonActive ? 'nav-item-active' : ''"
+                       ng-href="{{isUnauthorized() ? getUrl() : ''}}">
+                        <span class="icon_login"></span>
+                        <span class="lich_kab" ng-if="isUnauthorized()">Войти</span>
+                        <span class="lich_kab" ng-if="!isUnauthorized()">Личный кабинет</span>
+                    </a>
+                    <ul class="dropdown-menu" ng-if="!isUnauthorized()">
+                        <li>
+                            <a ui-sref="#"
+                               ui-sref-active="menu--personal-active">Мои чаты</a>
+                        </li>
+                        <li>
+                            <a ui-sref="#"
+                               ui-sref-active="menu--personal-active">Профиль</a>
+                        </li>
+                        <li>
+                            <a href="" ng-if="!isUnauthorized()" ng-click="logout()">Выйти</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
