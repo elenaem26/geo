@@ -4,8 +4,19 @@ angular.module('myApp')
             'findChats' : function(latitude, longitude) {
                 var req = {
                     'method' : 'GET',
-                    'url' : 'http://localhost:8080/mygeo/api/chat',
+                    'url' : 'http://localhost:8080/mygeo/api/chat/by_location',
                     'params' : {'latitude': latitude, 'longitude': longitude}
+                };
+                return $http(req);
+            },
+            'getMyChats' : function() {
+                var req = {
+                    'method' : 'GET',
+                    'url' : 'http://localhost:8080/mygeo/api/chat',
+                    'headers': {
+                        'Content-Type': 'application/json'
+                    },
+                    'data': {}
                 };
                 return $http(req);
             },
@@ -30,6 +41,14 @@ angular.module('myApp')
                     'method' : 'PUT',
                     'url' : 'http://localhost:8080/mygeo/api/chat/' + chatId + '/leave',
                     'data' : ''
+                };
+                return $http(req);
+            },
+            'saveChat' : function(chat) {
+                var req = {
+                    'method' : 'POST',
+                    'url' : 'http://localhost:8080/mygeo/api/chat',
+                    'data': chat
                 };
                 return $http(req);
             },

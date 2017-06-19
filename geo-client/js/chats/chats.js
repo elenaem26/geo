@@ -1,12 +1,13 @@
 angular.module('myApp')
-    .controller("chatsCtrl", ['$scope', 'chatsService', 'NgMap', function($scope, chatsService, NgMap) {
+    .controller("chatsCtrl", ['$scope', 'chatsService', 'NgMap', 'authService', 'mapService', function($scope, chatsService, NgMap, authService, mapService) {
         $scope.firstName = "John";
         $scope.lastName= "Doe";
         $scope.chats = [];
         $scope.latitude = null;
         $scope.longitude = null;
 
-        var markers = [];
+        var selectedChat = null;
+        authService.checkExpiration();
         angular.element(document).ready(function () {
             //$loading.start($scope.dwLoader);
             getChats();
@@ -35,8 +36,8 @@ angular.module('myApp')
         // }
 
         function getChats() {
-            $scope.latitude = 51.656919; //position.coords.latitude;
-            $scope.longitude = 39.186008; //position.coords.longitude;
+            $scope.latitude = 51.656910; //position.coords.latitude;
+            $scope.longitude = 39.186000; //position.coords.longitude;
             chatsService.findChats($scope.latitude, $scope.longitude).then(function (response) {
                 $scope.chats = response.data;
                 generateChatMarkers();
@@ -64,46 +65,19 @@ angular.module('myApp')
         };*/
 
         function generateChatMarkers() {
+            mapService.hideAll();
             for (i = 0; i < $scope.chats.length; i++) {
                 var item = $scope.chats[i];
-                markers[i] = new google.maps.Marker({
-                    title: item.name
-                });
-                var location = new google.maps.LatLng(item.latitude, item.longitude);
-                markers[i].setPosition(location);
-                markers[i].setShape({
-                    coords: [item.latitude, item.longitude, item.radius],
-                    type: "circle"
-                });
-                markers[i].setMap($scope.map);
-                /*google.maps.event.addListener(item, 'click', function() {
-                    var cityCircle = new google.maps.Circle({
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.1,
-                        strokeWeight: 2,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.35,
-                        map: $scope.map,
-                        center: this.getPosition(),
-                        radius: 300
-                    });});*/
-
-                var cityCircle = new google.maps.Circle({
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.1,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35,
-                    map: $scope.map,
-                    center: location,
-                    radius: item.radius
-                });
-
+                item.markerId = mapService.addMarkerAndCircle(item);
             }
         }
 
-        function joinChat() {
-
-        }
+        $scope.showCircle = function(chat) {
+            if (selectedChat !== null && selectedChat.markerId !== null) {
+                mapService.hideMarkerAndCircle(selectedChat.markerId);
+            }
+            mapService.showCircle(chat.markerId, $scope.map);
+            selectedChat = chat;
+        };
 
     }]);

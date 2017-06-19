@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,6 +62,8 @@ public class MessageServiceImpl implements MessageService {
         Message messageToSave = mapper.map(message, Message.class);
         messageToSave.setUser(currentUser);
         messageToSave.setChat(chat);
+        //TODO maybe client?
+        messageToSave.setDate(new Date());
         messageToSave = messageRepository.save(messageToSave);
         publisher.publishEvent(new MessageAddedEvent(messageToSave));
     }

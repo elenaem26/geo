@@ -31,5 +31,8 @@ public class XChat implements Serializable {
     @NotNull
     private Double radius;
     private Date disposeDate;
+    private Date lastActivity;
+    private Integer amountOfPeople;
     private Long chatGroupId;
+    private Integer disposeDays;
 }

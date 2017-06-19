@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ['ui.router', 'darthwade.loading', 'ngMap', 'config']);
+var app = angular.module("myApp", ['ui.router', 'darthwade.loading', 'ngMap', 'config', 'toastr']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $provide, $httpProvider) {
@@ -49,6 +49,30 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
                     controller: 'chatCtrl'
                 }
             }
+        }).state('create_chat', {
+            url: '/create_chat',
+            parent: 'root',
+            data: {
+                pageTitle: 'Создание чата'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'partial/chats/create_chat.html',
+                    controller: 'createChatCtrl'
+                }
+            }
+        }).state('my_chats', {
+            url: '/my_chats',
+            parent: 'root',
+            data: {
+                pageTitle: 'Мои чаты'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'partial/chats/my_chats.html',
+                    controller: 'myChatsCtrl'
+                }
+            }
         }).state('login', {
             url: '/login',
             parent: 'root',
@@ -63,26 +87,24 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
             }
         });
 
-        $provide.factory('httpRequestGeneralInterceptor', function () {
+        $provide.factory('httpRequestGeneralInterceptor',['$rootScope', function ($rootScope) {
             return {
-                //TODO service for localStorage
                 request: function (config) {
-                    if (localStorage.currentUser && localStorage.currentUser != "null") {
-                        var currentUser = JSON.parse(localStorage.currentUser);
-                        if (currentUser && currentUser.token) {
-                            config.headers['Authorization'] = 'Bearer ' + currentUser.token;
-                        }
+                    var user = $rootScope.currentUser;
+                    if (user && user != "null" && user.token) {
+                        config.headers['Authorization'] = 'Bearer ' + user.token;
                     }
                     return config;
                 }
             };
-        });
+        }]);
 
         $httpProvider.interceptors.push('httpRequestGeneralInterceptor');
+        $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
     }]);
 
-app.run(['CONFIG', '$http', 'stompHelper', '$rootScope', '$state',
-    function (CONFIG, $http, stompHelper, $rootScope, $state) {
+app.run(['CONFIG', '$http', 'stompHelper', '$rootScope', '$state', 'toastr',
+    function (CONFIG, $http, stompHelper, $rootScope, $state, toastr) {
 
         initSocket();
 

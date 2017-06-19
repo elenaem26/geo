@@ -1,0 +1,58 @@
+<div class="container mobile">
+    <!--<div class="row">
+        <div class="col-xs-10 col-sm-11">
+            <div ng-show="isUserOrServiceOrAnonymous()" class="btn_cr create_btn">
+                <a href="#" ng-click="createMessage($event)" >Создать чат</a>
+            </div>
+        </div>
+        <div class="col-xs-2 col-sm-1">
+            <div request-list-filter type-list="userTypes" status-list="userEvents" filter-action="filterData($item)"></div>
+        </div>
+    </div>-->
+    <!--TODO selected row-->
+    <div class="row">
+        <!--<div class="chats">
+            <div class="row" ng-repeat="chat in chats" ng-class="{'selected' : false}">
+                <div class="arrow"></div>
+                <div class="col-xs-4 col-md-2">
+                    <a  ui-sref="chat({id: chat.id})">{{chat.name}}</a>
+                </div>
+            </div>
+        </div>-->
+        <!--<div class="row hidden-xs hidden-sm">
+            <div class="col-md-4 text-center">Название чата</div>
+            <div class="col-md-4 text-center">Кол-во человек</div>
+            <div class="col-md-2 text-center">Последняя активность</div>
+            <div class="col-md-1"></div>
+        </div>-->
+        <div class="row table-row" ng-show="chats == 0">
+            <div class="col-xs-12 no-data-msg">Нет чатов поблизости
+            </div>
+        </div>
+        <div class="row table-row" ng-repeat="chat in chats">
+            <div class="arrow"></div>
+            <div class="col-xs-12 col-md-4">
+                <a class="cut-text" ng-click="showCircle(chat)" ng-bind="chat.name"></a>
+            </div>
+            <div class="col-xs-12 col-md-offset-0 col-md-4">
+                <div class="cut-text">
+                   {{chat.amountOfPeople}} человек
+                </div>
+            </div>
+            <div class="col-xs-8 col-md-offset-0 col-md-2 text-center">
+                <div class="request-list">
+                    <div class="date-time">Последняя активность: {{chat.lastActivity | date : 'dd.MM.yy HH:mm'}}</div>
+                </div>
+            </div>
+            <div class="col-xs-4 col-md-2 text-right">
+                <a ui-sref="chat({id: chat.id})">Присоединиться</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 map">
+                <ng-map zoom="11" center="[{{latitude}}, {{longitude}}]">
+                </ng-map>
+            </div>
+        </div>
+    </div>
+</div>

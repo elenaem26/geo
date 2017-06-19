@@ -1,7 +1,8 @@
-<div class="container mobile">
-    <form name="loginForm" role="form" ng-submit="submit()">
+<div class="container mobile login-container">
+    <form name="loginForm" role="form" ng-submit="submit()" class="inpt">
+        <div class="row all_form_login">
             <div class="col-xs-offset-1 col-xs-10">
-                <input type="text" ng-model="username" placeholder="Логин" required autofocus autocomplete="on" >
+                <input type="text" ng-model="username" placeholder="Логин" required autofocus autocomplete="on">
             </div>
             <div class="col-xs-offset-1 col-xs-10">
                 <input type="password" ng-model="password" placeholder="Пароль" required>
@@ -11,7 +12,8 @@
                 <p class="link_login">
                     <a ui-sref="signup">Зарегестрироваться</a>
                 </p>
-                <p ng-show="authFailed" class="error-msg" translate="AUTHORIZATION_ERROR"></p>
+                <p ng-show="authFailed" class="error-msg">Ошибка авторизации</p>
             </div>
+        </div>
     </form>
 </div>

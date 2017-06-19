@@ -4,6 +4,7 @@
             <div class="col-md-9 current-chat">
                 <div class="row chat-toolbar-row">
                     <div class="col-sm-12">
+                        {{chat.name}}
                         <div class="btn-group chat-toolbar" role="group" aria-label="...">
                             <button id="chat-invite" class="btn btn-default ticket-option" type="button">
                                 <i class="glyphicon glyphicon-plus"></i> Описание
@@ -29,7 +30,7 @@
                                         <div class="media-body">
                                             {{message.content}}
                                             <br>
-                                            <small class="text-muted">{{message.username}} | 23rd June at 5:00pm</small>
+                                            <small class="text-muted">{{message.username}} | {{message.date | date : 'dd.MM.yy HH:mm'}}</small>
                                             <hr>
                                         </div>
                                     </div>
@@ -43,8 +44,8 @@
                         <div class="input-group">
                             <input type="text" class="form-control" ng-model="message.content">
                             <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="sendMessage()">Send</button>
-                  </span>
+                                <button class="btn btn-default" type="submit" ng-click="sendMessage()">Отправить</button>
+                            </span>
                         </div>
                     </div>
                 </div>

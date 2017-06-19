@@ -51,13 +51,13 @@ public class ChatServiceImpl implements ChatService {
         }
         chat.setLocation(location);
         //TODO location set chat??
-        if (xchat.getDisposeDate() == null) {
+        if (xchat.getDisposeDays() != null && xchat.getDisposeDays() >=0 ) {
             //TODO check dispose date with user role
             //dispose chat by tomorrow
             Date disposeDate = new Date();
             Calendar c = Calendar.getInstance();
             c.setTime(disposeDate);
-            c.add(Calendar.DATE, 1);
+            c.add(Calendar.DATE, xchat.getDisposeDays());
             disposeDate = c.getTime();
             chat.setDisposeDate(disposeDate);
         }
@@ -93,7 +93,11 @@ public class ChatServiceImpl implements ChatService {
         List<Chat> chats = userChats.stream().filter(c -> c.getId() != null).map(c -> c.getId().getChat()).collect(Collectors.toList());
         List<XChat> xchats = new ArrayList<>();
         for (Chat chat : chats) {
-            xchats.add(mapper.map(chat, XChat.class));
+            //TODO converter
+            XChat xchat = mapper.map(chat, XChat.class);
+            xchat.setAmountOfPeople(getAmountOfPeople(chat));
+            xchat.setLastActivity(getLastActivity(chat));
+            xchats.add(xchat);
         }
         return xchats;
     }
@@ -191,7 +195,10 @@ public class ChatServiceImpl implements ChatService {
         );
         List<XChat> xchats = new ArrayList<>();
         for (Chat chat : sortedSet) {
-            xchats.add(mapper.map(chat, XChat.class));
+            XChat xchat = mapper.map(chat, XChat.class);
+            xchat.setAmountOfPeople(getAmountOfPeople(chat));
+            xchat.setLastActivity(getLastActivity(chat));
+            xchats.add(xchat);
         }
         return xchats;
     }
@@ -216,6 +223,15 @@ public class ChatServiceImpl implements ChatService {
         float dist = (float) (earthRadius * c);
 
         return dist;
+    }
+
+    private Date getLastActivity(Chat chat) {
+        Message lastMessage = chat.getMessages().stream().sorted((m1, m2) -> m2.getDate().compareTo(m1.getDate())).findFirst().orElse(null);
+        return lastMessage != null ? lastMessage.getDate() : null;
+    }
+
+    private Integer getAmountOfPeople(Chat chat) {
+        return Math.toIntExact(chat.getChatUsers().stream().filter(u -> u.getId().getRole().equals(UserChatRole.VISITOR)).count());
     }
 
 }

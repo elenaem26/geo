@@ -6,6 +6,7 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public class XMessage implements Serializable {
     @Size(min = 1, max = 140)
     @NotNull
     private String content;
+
+    private Date date;
 
     List<XAttachment> attachments;
 }

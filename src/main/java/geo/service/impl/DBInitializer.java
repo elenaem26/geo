@@ -43,11 +43,19 @@ public class DBInitializer {
         users = new ArrayList<>();
 
         users.add(User.builder()
-                .uid("nickUser")
+                .uid("nick")
                 .username("nick")
                 .password("1234")
                 .enabled(true)
-                .email("elenaem26@gmail.com")
+                .email("nick6@gmail.com")
+                .userRoles(Arrays.asList(roles.get(0)))
+                .build());
+        users.add(User.builder()
+                .uid("mike")
+                .username("mike")
+                .password("1234")
+                .enabled(true)
+                .email("mike26@gmail.com")
                 .userRoles(Arrays.asList(roles.get(0)))
                 .build());
         users.add(User.builder()
@@ -75,7 +83,7 @@ public class DBInitializer {
     private void initChats() {
         chats = new ArrayList<>();
         chats.add(Chat.builder()
-                .name("chatCircus")
+                .name("Цирк")
                 .location(Location.builder()
                     .latitude(51.655815)
                     .longitude(39.185268)
@@ -83,7 +91,7 @@ public class DBInitializer {
                 .radius(300.)
                 .build());
         chats.add(Chat.builder()
-                .name("chatSCEurope")
+                .name("Европа")
                 .location(Location.builder()
                         .latitude(51.657026)
                         .longitude(39.185386)
@@ -91,7 +99,7 @@ public class DBInitializer {
                 .radius(300.)
                 .build());
         chats.add(Chat.builder()
-                .name("chatSunParadise")
+                .name("Солнечный рай")
                 .location(Location.builder()
                         .latitude(51.656011)
                         .longitude(39.188897)
@@ -99,7 +107,7 @@ public class DBInitializer {
                 .radius(300.)
                 .build());
         chats.add(Chat.builder()
-                .name("chatGranat")
+                .name("Гранат")
                 .location(Location.builder()
                         .latitude(51.659134)
                         .longitude(39.194248)
@@ -107,7 +115,7 @@ public class DBInitializer {
                 .radius(300.)
                 .build());
         chats.add(Chat.builder()
-                .name("chatDiagnosticCenter")
+                .name("Диагностический центр")
                 .location(Location.builder()
                         .latitude(51.660471)
                         .longitude(39.195860)
@@ -115,7 +123,7 @@ public class DBInitializer {
                 .radius(300.)
                 .build());
         chats.add(Chat.builder()
-                .name("chatSpartak")
+                .name("Спартак")
                 .location(Location.builder()
                         .latitude(51.661752)
                         .longitude(39.204637)

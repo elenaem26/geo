@@ -613,6 +613,10 @@ a.btn:not(.clndr) {
     margin: auto;
 }
 
+.all_form_login {
+	text-align: center;
+}
+
 .all_form_login div {
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -620,6 +624,10 @@ a.btn:not(.clndr) {
 
 .all_form_login button {
 	min-width: 100px;
+}
+
+.login-container {
+	text-align: center;
 }
 
 .log_container {
@@ -800,7 +808,6 @@ a.btn:not(.clndr) {
 .container>form {
 	border-bottom-color: gray;
 	border-bottom-width: 2px;
-	background: #f2f2f2;
 	padding: 20px;
 	margin-top: 40px;
 	margin: 0 auto;
@@ -1049,9 +1056,6 @@ div#bggis-map.background-map {
 	vertical-align: top;
 }
 
-.map-mssg-modal #bggis-map.map-cursor {
-  cursor: url(../img/map-marker-pink.png), auto;
-}
 
 /******************** /map dialog content ********************/
 
@@ -1295,14 +1299,6 @@ tbody td.first.last.no-data-row {
 	font-size: 12px;
 }
 
-.request-list tbody td.last>a {
-	background: url(../img/oko.png) no-repeat 6px center;
-	width: 24px;
-	height: 10px;
-	display: block;
-	border-bottom-style: none;
-}
-
 .request-list a {
 	text-decoration: none;
 	border-bottom-style: dashed;
@@ -1477,50 +1473,6 @@ tbody td.first.last.no-data-row {
 
 td.crew-list {
     background-color: #fff;
-}
-
-.crew-list .first span {
-	text-overflow: ellipsis;
-	margin-top: -13px;
-	position: absolute;
-	table-layout: fixed;
-	height: 25px;
-	overflow: hidden;
-	font-weight: normal;
-	padding: 4px 6px 6px 6px;
-}
-
-.crew-list tbody td.first {
-	white-space: nowrap;
-	position: relative;
-}
-
-.crew-list tbody td.last>a {
-	background: url(../img/oko.png) no-repeat 6px center;
-	width: 24px;
-	height: 10px;
-	display: block;
-	border-bottom-style: none;
-}
-
-.crew-list a {
-	text-decoration: none;
-	border-bottom-style: dashed;
-	border-bottom-width: 1px;
-}
-
-.crew-list tr:hover {
-	background-color: white;
-}
-
-table.crew-task-list {
-	width: 100%;
-	padding-left: 0px;
-	padding-right: 0px;
-}
-
-.btn-save-crew {
-	margin-left: 10px;
 }
 
 .mssg-txt-area {
@@ -1977,11 +1929,6 @@ table.crew-task-list {
     background-image: none;
 }
 
-.fixed-size .multiSelect .checkboxLayer {
-	width: 100%;
-	min-width: auto;
-}
-
 .multiSelect .buttonLabel {
 	padding: 0px 15px 0px 0px !important;
 }
@@ -2007,74 +1954,6 @@ table.crew-task-list {
 	max-height: 400px;
 }
 
-.download-icon{
-	background-image: url("../img/download.svg");
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-}
-
-.audio-icon {
-	background-image: url("../img/audio-file.svg");
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-}
-
-.video-icon {
-	background-image: url("../img/video-file.svg");
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-}
-
-.arrow-left-icon {
-	background-image: url("../img/arrow_l.svg");
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-	cursor: pointer;
-}
-
-.arrow-right-icon {
-	background-image: url("../img/arrow_r.svg");
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-	cursor: pointer;
-}
-
-.angucomplete-btn {
-	height: 32px;
-	border-left: none;
-	margin-left: 0px !important;
-}
-
-.location-btn {
-	background-color: #E3F2FD;
-	padding: 2px;
-	border: 1px solid #2196f3;
-	border-left: 0;
-}
-
-.location-icon {
-	background-image: url("../img/location.svg");
-    width: 26px;
-    height: 26px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-}
 /*isteven multiselect filter end custom styles*/
 
 .admin-pages-list {
@@ -2106,59 +1985,6 @@ table.crew-task-list {
 
 .filter-content label {
 	font-weight: normal;
-}
-
-a.hide_collection {
-	background: url(../img/minus_circle.svg) no-repeat 0px center;
-	width: 24px;
-	height: 30px;
-	display: block;
-	border-style: none;
-	cursor: pointer;
-}
-
-a.show_collection {
-	background: url(../img/plus_circle.svg) no-repeat 0px center;
-	width: 24px;
-	height: 30px;
-	display: block;
-	border-style: none;
-	cursor: pointer;
-}
-
-a.oko_bl_link {
-	background: url(../img/oko_blue.svg) no-repeat 0px center;
-	width: 24px;
-	height: 10px;
-	display: block;
-	border-bottom-style: none;
-}
-
-button.oko_bl_link {
-	background: url(../img/oko_blue.svg) no-repeat 0px center;
-	width: 17px;
-	height: 10px;
-	display: block;
-	border-bottom-style: none;
-	border: 0;
-}
-
-button.edit_link {
-	background: url(../img/edit.svg) no-repeat 0px center;
-	width: 13px;
-	height: 13px;
-	display: block;
-	border-bottom-style: none;
-	border: 0;
-}
-
-button.del_link{
-	background: url(../img/del.svg) no-repeat 0px center;
-	width: 13px;
-	height: 13px;
-	display: block;
-	border-bottom-style: none;
-	border: 0;
 }
 
 a.disabled {
@@ -2285,6 +2111,10 @@ a.disabled {
 .mobile .map {
 	min-height: 300px;
 	height: 70vh;
+}
+
+a{
+	cursor: pointer;
 }
 
 .mobile .page-header{

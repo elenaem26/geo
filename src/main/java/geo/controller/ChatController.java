@@ -60,14 +60,14 @@ public class ChatController {
         chatService.leaveChat(userService.getCurrentUsername(), chatId);
     }
 
-    @RequestMapping(value = "/admin", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public List<XChat> getUserChatsAdmin() {
         log.debug("getUserChatsAdmin request received");
         return chatService.getChatsByUser(userService.getCurrentUsername(), UserChatRole.ADMIN);
     }
 
-    @RequestMapping(produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value="/by_location", produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public List<XChat> getUserChats(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
         log.debug("getUserChats request received");

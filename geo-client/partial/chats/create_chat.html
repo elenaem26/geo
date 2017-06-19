@@ -1,0 +1,42 @@
+<div class="container" ng-class="deviceType == 'desktop' ? 'position' : 'mobile'" dw-loading="{{dwLoader}}" dw-loading-options="{text: ''}">
+    <h4 class="page-name"></h4>
+    <form name="newChatForm" class="form-horizontal editable-form new-message-form" novalidate>
+        <div class="form-group">
+            <label class="hidden-xs col-sm-2 control-label" for="nameField">Название *</label>
+            <div class="col-xs-12 col-sm-9 col-md-7">
+                <input type="text" name="name" id="nameField" tabindex="1" ng-model="user_chat.name" class="form-control" ng-class="{'invalid-input' : (newChatForm.$submitted || newChatForm.name.$touched) && newChatForm.name.$invalid}" ng-maxlength="800" required/>
+                <p ng-show="newChatForm.name.$error.required && (newChatForm.name.$touched || newChatForm.$submitted)" class="error-msg">Поле не заполнено</p>
+                <p ng-show="newChatForm.name.$error.maxlength" class="error-msg">Превышено допустимое кол-во символов</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="hidden-xs col-sm-2 control-label" for="descriptionField">Описание *</label>
+            <div class="col-xs-12 col-sm-9 col-md-7">
+                <input type="text" name="description" id="descriptionField" tabindex="1" ng-model="user_chat.description" class="form-control" ng-class="{'invalid-input' : (newChatForm.$submitted || newChatForm.description.$touched) && newChatForm.description.$invalid}" ng-maxlength="800" required/>
+                <p ng-show="newChatForm.description.$error.required && (newChatForm.description.$touched || newChatForm.$submitted)" class="error-msg">Поле не заполнено</p>
+                <p ng-show="newChatForm.description.$error.maxlength" class="error-msg">Превышено допустимое кол-во символов</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="hidden-xs col-sm-2 control-label" for="radiusField">Радиус в метрах *</label>
+            <div class="col-xs-12 col-sm-9 col-md-7">
+                <input type="number" min="1" max="1000" name="radius" id="radiusField" tabindex="1" ng-model="user_chat.radius" class="form-control" ng-class="{'invalid-input' : (newChatForm.$submitted || newChatForm.radius.$touched) && newChatForm.radius.$invalid}" ng-maxlength="800" required/>
+                <p ng-show="newChatForm.radius.$error.required && (newChatForm.radius.$touched || newChatForm.$submitted)" class="error-msg">Поле не заполнено</p>
+                <p ng-show="newChatForm.radius.$error.max" class="error-msg">Слишком большой радиус</p>
+                <p ng-show="newChatForm.radius.$error.min" class="error-msg">Слишком маленький радиус</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="hidden-xs col-sm-2 control-label" for="disposeDaysField">Кол-во дней существования *</label>
+            <div class="col-xs-12 col-sm-9 col-md-7">
+                <input type="number" min="1" max="5" name="disposeDays" id="disposeDaysField" tabindex="1" ng-model="user_chat.disposeDays" class="form-control" ng-class="{'invalid-input' : (newChatForm.$submitted || newChatForm.disposeDays.$touched) && newChatForm.disposeDays.$invalid}" ng-maxlength="800" required/>
+                <p ng-show="newChatForm.disposeDays.$error.required && (newChatForm.disposeDays.$touched || newChatForm.$submitted)" class="error-msg">Поле не заполнено</p>
+                <p ng-show="newChatForm.disposeDays.$error.max" class="error-msg">Слишком большое кол-во дней</p>
+                <p ng-show="newChatForm.disposeDays.$error.min" class="error-msg">Слишком маленькое кол-во дней</p>
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" ng-click="save()" class="large-btn green" value="Сохранить" />
+        </div>
+    </form>
+</div>

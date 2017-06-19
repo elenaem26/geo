@@ -3,6 +3,7 @@ package geo.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,9 @@ public class Message extends AbstractEntity {
 
     @Column(name = "CONTENT", length = 140)
     private String content;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
     @OneToMany(mappedBy = "message")
     private List<Attachment> attachments;

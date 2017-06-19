@@ -1,12 +1,14 @@
 angular.module('myApp')
-    .factory('authService', ['$http', '$rootScope', Service]);
+    .factory('authService', ['$http', '$rootScope', '$state', Service]);
 
-    function Service($http, $rootScope) {
+    function Service($http, $rootScope, $state) {
         var service = {};
 
         service.login = login;
         service.logout = logout;
         service.isAuthenticated = isAuthenticated;
+        service.checkExpiration = checkExpiration;
+        service.getCurrentUser = getCurrentUser;
 
         return service;
 
@@ -21,6 +23,7 @@ angular.module('myApp')
 
                             // store username and token in local storage to keep user logged in between page refreshes
                             localStorage.currentUser = JSON.stringify({ username: username, token: token});
+                            $rootScope.currentUser = { username: username, token: token};
 
                             // execute callback with true to indicate successful login
                             //callback(true);
@@ -35,7 +38,27 @@ angular.module('myApp')
         }
 
         function isAuthenticated() {
-            return localStorage.currentUser != "null" && localStorage.currentUser != null;
+            if (!$rootScope.currentUser) {
+                if (localStorage.currentUser) {
+                    $rootScope.currentUser = JSON.parse(localStorage.currentUser);
+                }
+            }
+            return !!$rootScope.currentUser;
+        }
+
+        function getCurrentUser() {
+            /*            if (!$rootScope.currentUser) {
+             if (localStorage.currentUser) {
+             $rootScope.currentUser = JSON.parse(localStorage.currentUser);
+             }
+             }*/
+            return $rootScope.currentUser;
+        }
+
+        function checkExpiration() {
+            if (!isAuthenticated()) {
+                $state.go("login");
+            }
         }
 
         function logout() {
