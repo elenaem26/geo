@@ -3,13 +3,13 @@ angular.module('myApp')
         $scope.firstName = "John";
         $scope.lastName= "Doe";
         $scope.chats = [];
-        $scope.latitude = null;
-        $scope.longitude = null;
-
+        $scope.latitude = 51.656910; //position.coords.latitude;
+        $scope.longitude = 39.186000; //position.coords.longitude;
         var selectedChat = null;
         authService.checkExpiration();
         angular.element(document).ready(function () {
             //$loading.start($scope.dwLoader);
+            $scope.isAdmin = authService.isAdmin();
             getChats();
             //$loading.finish($scope.dwLoader);
             /*NgMap.getMap().then(function(map) {
@@ -36,12 +36,17 @@ angular.module('myApp')
         // }
 
         function getChats() {
-            $scope.latitude = 51.656910; //position.coords.latitude;
-            $scope.longitude = 39.186000; //position.coords.longitude;
-            chatsService.findChats($scope.latitude, $scope.longitude).then(function (response) {
-                $scope.chats = response.data;
-                generateChatMarkers();
-            });
+            if ($scope.isAdmin) {
+                chatsService.findAllChats().then(function (response) {
+                    $scope.chats = response.data;
+                    generateChatMarkers();
+                });
+            } else {
+                chatsService.findChats($scope.latitude, $scope.longitude).then(function (response) {
+                    $scope.chats = response.data;
+                    generateChatMarkers();
+                });
+            }
         }
         /*for (var i=0; i<8 ; i++) {
             markers[i] = new google.maps.Marker({
@@ -65,7 +70,9 @@ angular.module('myApp')
         };*/
 
         function generateChatMarkers() {
+            //TODO timeout
             mapService.hideAll();
+            mapService.addCurrentPosition($scope.latitude , $scope.longitude, $scope.map);
             for (i = 0; i < $scope.chats.length; i++) {
                 var item = $scope.chats[i];
                 item.markerId = mapService.addMarkerAndCircle(item);

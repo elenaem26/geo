@@ -23,5 +23,7 @@ public interface ChatService {
 
     List<XChat> getChats(Double latitude, Double longitude);
 
+    List<XChat> getAllChats();
+
     XChat getChat(Long chatId);
 }

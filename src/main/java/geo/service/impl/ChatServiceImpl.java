@@ -204,6 +204,20 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public List<XChat> getAllChats() {
+        List<Chat> chats = chatRepository.findAll();
+        List<XChat> result = new ArrayList<>();
+        for (Chat chat : chats) {
+            XChat xchat = mapper.map(chat, XChat.class);
+            xchat.setAmountOfPeople(getAmountOfPeople(chat));
+            xchat.setLastActivity(getLastActivity(chat));
+            result.add(xchat);
+        }
+        result.sort(Comparator.comparing(XChat::getName));
+        return result;
+    }
+
+    @Override
     public XChat getChat(Long chatId) {
         Chat chat = chatRepository.findOne(chatId);
         if (chat == null) {
@@ -212,7 +226,7 @@ public class ChatServiceImpl implements ChatService {
         return mapper.map(chat, XChat.class);
     }
 
-    public static double calculateDistance(Double lat1, Double lng1, Double lat2, Double lng2) {
+    static double calculateDistance(Double lat1, Double lng1, Double lat2, Double lng2) {
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2-lat1);
         double dLng = Math.toRadians(lng2-lng1);

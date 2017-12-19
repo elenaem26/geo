@@ -9,6 +9,13 @@ angular.module('myApp')
                 };
                 return $http(req);
             },
+            'findAllChats' : function() {
+                var req = {
+                    'method' : 'GET',
+                    'url' : 'http://localhost:8080/mygeo/admin/allchats',
+                };
+                return $http(req);
+            },
             'getMyChats' : function() {
                 var req = {
                     'method' : 'GET',

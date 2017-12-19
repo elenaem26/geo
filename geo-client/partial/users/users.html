@@ -1,0 +1,23 @@
+<div class="container mobile">
+    <!--TODO selected row-->
+    <div class="row">
+        <div class="row table-row" ng-show="users == 0">
+            <div class="col-xs-12 no-data-msg">Нет людей
+            </div>
+        </div>
+        <div class="row table-row" ng-repeat="user in users">
+            <div class="arrow"></div>
+            <div class="col-xs-12 col-md-4">
+                <a class="cut-text" ng-click="showCircle(user)" ng-bind="user.username"></a>
+            </div>
+            <div class="col-xs-12 col-md-offset-0 col-md-4">
+                <div class="cut-text">
+                    {{user.lastName}} {{user.firstName}} {{user.middleName}}
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4 text-right">
+                <a href="#">Заблокировать</a>
+            </div>
+        </div>
+    </div>
+</div>

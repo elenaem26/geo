@@ -113,10 +113,6 @@ input[type="text"]:focus {
 	right: 0;
 }
 
-.btn-task {
-	margin-top: 5px;
-}
-
 .position{
  	width: 900px!important;
 	margin: 0 auto;
@@ -146,22 +142,11 @@ input[type="text"]:focus {
 	display: inline-block;
 }
 
-.filtr_btn {
-    float: right;
-    margin-right: 15px;
-	margin-top: 12px;
-}
-
-.create_btn {
-	float: left;
-	margin-left: 15px;
-	margin-top: 12px;
-}
-
-.filtr_btn .popup-fltr-btn {
-	padding: 7px 12px 6px 15px;
-	background: #F5F5F5;
-	border-radius: 25px;
+.btn.attach {
+	height: 32px;
+	width: 32px;
+	margin-left: 1px !important;
+	background: url("../image/attach.png") no-repeat center;
 }
 
 .table-bordered th {
@@ -851,6 +836,7 @@ a.btn:not(.clndr) {
 
 .datetime-picker .input-group-btn .btn {
 	height: 32px;
+	margin-left: 1px;
 }
 
 .relative-time {

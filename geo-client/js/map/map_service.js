@@ -2,7 +2,7 @@ angular.module('myApp')
     .service('mapService', function () {
         var markers = [];
         var circles = [];
-
+        var currentPosition = null;
         return {
             addMarkerAndCircle: function (item) {
                 var i = markers.length;
@@ -27,6 +27,20 @@ angular.module('myApp')
                     radius: 300
                 });
                 return i;
+            },
+            addCurrentPosition: function (latitude, longitude, map) {
+                currentPosition = new google.maps.Marker({
+                    title: "current position"
+                });
+                var location = new google.maps.LatLng(latitude, longitude);
+                currentPosition.setPosition(location);
+                currentPosition.setIcon("/geo-client/image/position.png");
+                currentPosition.setMap(map);
+            },
+            hideCurrentPosition: function (item, map) {
+                if (currentPosition !== null) {
+                    currentPosition.setMap(null);
+                }
             },
             hideMarkerAndCircle: function (i) {
                 if (markers[i] !== null) {

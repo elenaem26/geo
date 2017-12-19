@@ -13,10 +13,16 @@
         <p class="navbar-text hidden-xs hidden-sm">ГеоЧат</p>
         <div class="navbar-collapse" ng-class="{'collapse' : navCollapsed}" ng-click="navCollapsed = !navCollapsed">
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <li ng-show="isAdmin==false">
                     <a ui-sref="home"
                        ui-sref-active="nav-item-active">
                         Чаты поблизости
+                    </a>
+                </li>
+                <li ng-show="isAdmin==true">
+                    <a ui-sref="home"
+                       ui-sref-active="nav-item-active">
+                        Все Чаты
                     </a>
                 </li>
                 <li class="dropdown">
@@ -29,9 +35,13 @@
                         <span class="lich_kab" ng-if="!isUnauthorized()">Личный кабинет</span>
                     </a>
                     <ul class="dropdown-menu" ng-if="!isUnauthorized()">
-                        <li>
+                        <li ng-show="isAdmin==false">
                             <a ui-sref="my_chats"
                                ui-sref-active="menu--personal-active">Мои чаты</a>
+                        </li>
+                        <li ng-show="isAdmin==true">
+                            <a ui-sref="users"
+                               ui-sref-active="menu--personal-active">Все пользователи</a>
                         </li>
                         <li>
                             <a ui-sref="#"

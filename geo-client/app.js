@@ -73,6 +73,18 @@ app.config(['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider',
                     controller: 'myChatsCtrl'
                 }
             }
+        }).state('users', {
+            url: '/users',
+            parent: 'root',
+            data: {
+                pageTitle: 'Все пользователи'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'partial/users/users.html',
+                    controller: 'usersCtrl'
+                }
+            }
         }).state('login', {
             url: '/login',
             parent: 'root',

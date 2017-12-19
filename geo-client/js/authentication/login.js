@@ -13,9 +13,8 @@ angular.module('myApp')
                     if (!authService.isAuthenticated()) {
                         $scope.authFailed = true;
                     } else {
-                        $state.go('home');
+                        $state.go('home', {}, {reload: true});
                     }
-
                     $scope.isBtnDisabled = false;
                     $loading.finish($scope.dwLoader);
                 });

@@ -9,6 +9,7 @@ angular.module('myApp')
         service.isAuthenticated = isAuthenticated;
         service.checkExpiration = checkExpiration;
         service.getCurrentUser = getCurrentUser;
+        service.isAdmin = isAdmin;
 
         return service;
 
@@ -55,6 +56,16 @@ angular.module('myApp')
             return $rootScope.currentUser;
         }
 
+        function isAdmin() {
+            /*            if (!$rootScope.currentUser) {
+             if (localStorage.currentUser) {
+             $rootScope.currentUser = JSON.parse(localStorage.currentUser);
+             }
+             }*/
+            //TODO!!!
+            return $rootScope.currentUser != null && $rootScope.currentUser.username == "admin";
+        }
+
         function checkExpiration() {
             if (!isAuthenticated()) {
                 $state.go("login");
@@ -63,6 +74,7 @@ angular.module('myApp')
 
         function logout() {
             // remove user from local storage and clear http auth header
+            $rootScope.currentUser = null;
             delete localStorage.currentUser;
             //$http.defaults.headers.common.Authorization = '';
         }
