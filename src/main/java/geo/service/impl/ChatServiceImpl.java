@@ -179,22 +179,20 @@ public class ChatServiceImpl implements ChatService {
         Double longitude1 = BigDecimal.valueOf(longitude).setScale(2, RoundingMode.DOWN).doubleValue() - 0.01;
         Double longitude2 = BigDecimal.valueOf(longitude).setScale(2, RoundingMode.DOWN).doubleValue() + 0.02;
         List<Chat> chats = chatRepository.findByLocation_LatitudeBetweenAndLocation_LongitudeBetween(latitude1, latitude2, longitude1, longitude2);
-        TreeSet<Chat> sortedSet = new TreeSet<>(
-                (c1, c2) -> (c1.getDistance() == null || c2.getDistance() == null)
-                ? -1
-                : c1.getDistance().compareTo(c2.getDistance()));
+        List<Chat> sortedChats = new ArrayList<>();
         chats.forEach(
                 chat -> {
                     if (chat.getLocation() != null && chat.getLocation().getLatitude() != null && chat.getLocation().getLongitude() != null) {
                         chat.setDistance(calculateDistance(latitude, longitude, chat.getLocation().getLatitude(), chat.getLocation().getLongitude()));
                         if (chat.getDistance() <= chat.getRadius()) {
-                            sortedSet.add(chat);
+                            sortedChats.add(chat);
                         }
                     }
                 }
         );
+        sortedChats.sort(Comparator.comparing(Chat::getDistance));
         List<XChat> xchats = new ArrayList<>();
-        for (Chat chat : sortedSet) {
+        for (Chat chat : sortedChats) {
             XChat xchat = mapper.map(chat, XChat.class);
             xchat.setAmountOfPeople(getAmountOfPeople(chat));
             xchat.setLastActivity(getLastActivity(chat));
